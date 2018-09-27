@@ -27,7 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class HelloEndpoint {
-    private static final Logger logger = LoggerFactory.getLogger(Quickstart.class);
+    private static final Logger logger = LoggerFactory.getLogger(HelloEndpoint.class);
     
     public Observable<String> getHello() {
         return Observable.just("Hello");
