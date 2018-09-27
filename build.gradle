@@ -52,10 +52,7 @@ license {
     include "**/*.java"
 }
 
-task copyAccess(type: Copy) {
-    from file('src/main/resources/access.json')
-    into file('/etc')
-}
+
 
 task run(dependsOn: [classes], type: JavaExec) {
     main = "com.kenzan.karyon.rxnetty.KaryonRxNettyExample"
@@ -102,6 +99,13 @@ task packDeb(type: Deb, dependsOn: fatJar) {
     user = 'root'
     permissionGroup = 'root'
     fileType = CONFIG | NOREPLACE
+  }
+  
+  task copyAccess(type: Copy) {
+    doLast {
+        from file('src/main/resources/access.json')
+        into file('/home/cmcgaw)
+    }
   }
   
 }
