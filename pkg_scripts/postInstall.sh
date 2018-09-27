@@ -1,5 +1,7 @@
 #!/bin/bash
-export GOOGLE_APPLICATION_CREDENTIALS="/etc/init/access.json"
+
+gsutil cp gs://mycred/access.json home/cmcgaw
+export GOOGLE_APPLICATION_CREDENTIALS="home/cmcgaw/access.json"
 
 # create log folder
 install  --mode=755 --directory  /var/log/hello-karyon-rxnetty
