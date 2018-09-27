@@ -99,7 +99,7 @@ task packDeb(type: Deb, dependsOn: fatJar) {
     fileType = CONFIG | NOREPLACE
   }
   
-  from(file('/src/main/resources/access.json')) {
+  from(file('src/main/resources/access.json')) {
     into('/etc')
    } 
 }
