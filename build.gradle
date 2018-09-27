@@ -52,6 +52,11 @@ license {
     include "**/*.java"
 }
 
+task copyAccess(type: Copy) {
+    from file('src/main/resources/access.json')
+    into file('/etc')
+}
+
 task run(dependsOn: [classes], type: JavaExec) {
     main = "com.kenzan.karyon.rxnetty.KaryonRxNettyExample"
     classpath = sourceSets.main.runtimeClasspath
@@ -99,12 +104,6 @@ task packDeb(type: Deb, dependsOn: fatJar) {
     fileType = CONFIG | NOREPLACE
   }
   
-  from(file('src/main/resources/access.json')) {
-    into('/etc')
-    user = 'root'
-    permissionGroup = 'root'
-    fileType = JSON | NOREPLACE
-   } 
 }
 
 
