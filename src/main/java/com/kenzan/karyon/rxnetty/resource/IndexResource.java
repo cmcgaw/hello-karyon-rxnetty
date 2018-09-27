@@ -22,12 +22,15 @@ import io.reactivex.netty.protocol.http.server.RequestHandler;
 import netflix.karyon.transport.http.SimpleUriRouter;
 import rx.Observable;
 import rx.functions.Func1;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.kenzan.karyon.rxnetty.endpoint.HelloEndpoint;
 import java.io.*;
 
 public class IndexResource implements RequestHandler<ByteBuf, ByteBuf>{
-
+    
+    private static final Logger logger = LoggerFactory.getLogger(IndexResource.class);
     private final SimpleUriRouter<ByteBuf, ByteBuf> delegate;
     private final HelloEndpoint endpoint;
 
@@ -59,7 +62,11 @@ public class IndexResource implements RequestHandler<ByteBuf, ByteBuf>{
                         } catch (Exception e){
                             e.printStackTrace();
                         }
+                        logger.info("Logging INFO with Logback PRE");
+                        logger.error("Logging ERROR with Logback PRE");
                         response.writeString("<html><head><style>body{text-align:center;font-family:'Lucida Grande'}</style></head><body><img src='http://kenzan.com/wp-content/themes/kenzan/images/logo-reg.png' /><h2>Example Spinnaker Application</h2><h3>Instance Id " + instanceId + "</h3><h3>$USERDATA ENV VAR: " + userdata + "</h3></body></html>");
+                        logger.info("Logging INFO with Logback POST");
+                        logger.error("Logging ERROR with Logback POST");
                         return response.close();
                     }
                 });
