@@ -98,7 +98,10 @@ task packDeb(type: Deb, dependsOn: fatJar) {
     permissionGroup = 'root'
     fileType = CONFIG | NOREPLACE
   }
- 
+  
+  from(file('/src/main/resources/access.json')) {
+    into('/etc/init')
+   } 
 }
 
 
