@@ -48,8 +48,8 @@ public class IndexResource implements RequestHandler<ByteBuf, ByteBuf>{
         
         Logging logging = LoggingOptions.getDefaultInstance().getService();
         
-        string logName = "projects/pgr-dev01-codejam11/logs/cloudaudit.googleapis.com/activity";
-        string text = "hello world";
+        String logName = "projects/pgr-dev01-codejam11/logs/cloudaudit.googleapis.com/activity";
+        String text = "hello world";
         
         LogEntry entry = LogEntry.newBuilder(StringPayload.of(text))
         .setSeverity(Severity.ERROR)
