@@ -23,9 +23,12 @@ import java.util.regex.Pattern;
 import com.sun.jersey.api.uri.UriPattern;
 
 import rx.Observable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HelloEndpoint {
-
+    private static final Logger logger = LoggerFactory.getLogger(Quickstart.class);
+    
     public Observable<String> getHello() {
         return Observable.just("Hello");
     }
@@ -33,7 +36,10 @@ public class HelloEndpoint {
     public Observable<String> getHelloName(HttpServerRequest<ByteBuf> request) {
         UriPattern pattern = new UriPattern(Pattern.compile("/hello/(.*)"));
         String name = pattern.match(request.getUri()).group(1);
-
+        
+        logger.info("Logging INFO with Logback");
+        logger.error("Logging ERROR with Logback");
+        
         return Observable.just("Hello " + name);
     }
 }
