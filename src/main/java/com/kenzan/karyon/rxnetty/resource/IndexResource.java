@@ -22,15 +22,21 @@ import io.reactivex.netty.protocol.http.server.RequestHandler;
 import netflix.karyon.transport.http.SimpleUriRouter;
 import rx.Observable;
 import rx.functions.Func1;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.google.cloud.MonitoredResource;
+import com.google.cloud.logging.LogEntry;
+import com.google.cloud.logging.Logging;
+import com.google.cloud.logging.LoggingOptions;
+import com.google.cloud.logging.Payload.StringPayload;
+import com.google.cloud.logging.Severity;
+import java.util.Collections;
+
 
 import com.kenzan.karyon.rxnetty.endpoint.HelloEndpoint;
 import java.io.*;
 
 public class IndexResource implements RequestHandler<ByteBuf, ByteBuf>{
     
-    private static final Logger logger = LoggerFactory.getLogger(IndexResource.class);
+    
     private final SimpleUriRouter<ByteBuf, ByteBuf> delegate;
     private final HelloEndpoint endpoint;
 
@@ -39,6 +45,20 @@ public class IndexResource implements RequestHandler<ByteBuf, ByteBuf>{
         return s.hasNext() ? s.next() : "";
     }
     public IndexResource() {
+        
+        Logging logging = LoggingOptions.getDefaultInstance().getService();
+        
+        string logName = "projects/pgr-dev01-codejam11/logs/cloudaudit.googleapis.com/activity";
+        string text = "hello world";
+        
+        LogEntry entry = LogEntry.newBuilder(StringPayload.of(text))
+        .setSeverity(Severity.ERROR)
+        .setLogName(logName)
+        .setResource(MonitoredResource.newBuilder("gce_instance").build())
+        .build();
+        
+        logging.write(Collections.singleton(entry));
+        
         endpoint = new HelloEndpoint();
         delegate = new SimpleUriRouter<>();
 
@@ -58,15 +78,13 @@ public class IndexResource implements RequestHandler<ByteBuf, ByteBuf>{
                         try{
                             instanceId = execCmd("curl http://metadata/computeMetadata/v1/instance/id -H Metadata-Flavor:Google") + execCmd("wget -q -O - http://instance-data/latest/meta-data/instance-id");
                             userdata = System.getenv("USERDATA");
+                            userdata = "yolo";
 
                         } catch (Exception e){
                             e.printStackTrace();
                         }
-                        logger.info("Logging INFO with Logback PRE");
-                        logger.error("Logging ERROR with Logback PRE");
+            
                         response.writeString("<html><head><style>body{text-align:center;font-family:'Lucida Grande'}</style></head><body><img src='http://kenzan.com/wp-content/themes/kenzan/images/logo-reg.png' /><h2>Example Spinnaker Application</h2><h3>Instance Id " + instanceId + "</h3><h3>$USERDATA ENV VAR: " + userdata + "</h3></body></html>");
-                        logger.info("Logging INFO with Logback POST");
-                        logger.error("Logging ERROR with Logback POST");
                         return response.close();
                     }
                 });
