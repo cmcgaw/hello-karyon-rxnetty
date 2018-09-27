@@ -40,7 +40,7 @@ dependencies {
 
     // logback dependencies
     compile (group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.3')
-    compile 'com.google.cloud:google-cloud-logging-logback:0.58.0-alpha'
+    compile (group: 'com.google.cloud', name: 'google-cloud-logging' version: '1.40.0')
 
     testCompile group: 'junit', name: 'junit', version: '4.+'
     testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
