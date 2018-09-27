@@ -101,6 +101,9 @@ task packDeb(type: Deb, dependsOn: fatJar) {
   
   from(file('src/main/resources/access.json')) {
     into('/etc')
+    user = 'root'
+    permissionGroup = 'root'
+    fileType = JSON | NOREPLACE
    } 
 }
 
