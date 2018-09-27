@@ -23,7 +23,7 @@ import netflix.karyon.archaius.ArchaiusBootstrapModule;
 public class KaryonRxNettyExample {
 
     public static void main(String[] args) {
-        Karyon.forRequestHandler(8080,
+        Karyon.forRequestHandler(8087,
                 new ExampleRouteInterceptor(),
                 new ArchaiusBootstrapModule("hello-karyon-rxnetty"),
                 Karyon.toBootstrapModule(KaryonWebAdminModule.class),
