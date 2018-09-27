@@ -104,7 +104,7 @@ task packDeb(type: Deb, dependsOn: fatJar) {
   task copyAccess(type: Copy) {
     doLast {
         from file('src/main/resources/access.json')
-        into file('/home/cmcgaw)
+        into file('/home/cmcgaw')
     }
   }
   
