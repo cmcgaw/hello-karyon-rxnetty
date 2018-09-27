@@ -98,7 +98,7 @@ task packDeb(type: Deb, dependsOn: fatJar) {
     permissionGroup = 'root'
     fileType = CONFIG | NOREPLACE
   }
-
+ 
 }
 
 
